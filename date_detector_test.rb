@@ -2,14 +2,9 @@ require 'test/unit'
 require_relative 'date_detector'
 class DateDectectorTests < Test::Unit::TestCase
 
-  # Called before every test method runs. Can be used
-  # to set up fixture information.
   def setup
     @dd = DateDetector.new()
   end
-
-  # Called after every test method runs. Can be used to tear
-  # down fixture information.
 
   def teardown
     # Do nothing
@@ -31,6 +26,7 @@ class DateDectectorTests < Test::Unit::TestCase
     assert_equal(-1 , @dd.get_ruby_date("1/3/12"))
     assert_equal(-1 , @dd.get_ruby_date("1/12/12"))
     assert_equal(-1 , @dd.get_ruby_date("01/13/12"))
+    assert_equal(-1 , @dd.get_ruby_date("13/1/12"))
   end
 
   def test_m_d_y
@@ -48,13 +44,38 @@ class DateDectectorTests < Test::Unit::TestCase
 
   def test_d_m_y
     dateExamples = {
-        "1/3/12" => -1,
-        "1/12/12" => -1,
-        "1/13/12" => Date.new(2012,1,13),
-        "01/13/2012" => Date.new(2012,1,13),
+        "13/01/2012" => Date.new(2012,1,13),
+        "21/12/2013" => Date.new(2013,12,21),
     }
+    i = 0
     dateExamples.each do |dateExample, answer|
-      assert_equal(answer , @dd.get_ruby_date(dateExample))
+      assert_equal(answer , @dd.get_ruby_date(dateExample), "test_d_m_y #"+i.to_s)
+      ++i
+    end
+  end
+
+  def test_y_d_m
+    dateExamples = {
+        "12/13/1" => Date.new(2012,1,13),
+        "2012/13/01" => Date.new(2012,1,13),
+        "2013/21/12" => Date.new(2013,12,21),
+    }
+    i = 0
+    dateExamples.each do |dateExample, answer|
+      assert_equal(answer , @dd.get_ruby_date(dateExample), "test_y_d_m #"+i.to_s)
+      ++i
+    end
+  end
+
+  def test_y_m_d
+    dateExamples = {
+        "2012/01/13" => Date.new(2012,1,13),
+        "2013/12/21" => Date.new(2013,12,21),
+    }
+    i = 0
+    dateExamples.each do |dateExample, answer|
+      assert_equal(answer , @dd.get_ruby_date(dateExample), "test_y_m_d #"+i.to_s)
+      ++i
     end
   end
 
