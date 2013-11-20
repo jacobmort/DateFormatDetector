@@ -41,7 +41,7 @@ class DateDectectorTests < Test::Unit::TestCase
     i = 0
     dateExamples.each do |dateExample, answer|
       assert_equal(answer , @dd.get_ruby_date(dateExample), "test_m_d_y #"+i.to_s)
-      ++i
+      i += 1
     end
   end
 
@@ -55,7 +55,7 @@ class DateDectectorTests < Test::Unit::TestCase
     i = 0
     dateExamples.each do |dateExample, answer|
       assert_equal(answer , @dd.get_ruby_date(dateExample), "test_d_m_y #"+i.to_s)
-      ++i
+      i += 1
     end
   end
 
@@ -71,7 +71,7 @@ class DateDectectorTests < Test::Unit::TestCase
     i = 0
     dateExamples.each do |dateExample, answer|
       assert_equal(answer , @dd.get_ruby_date(dateExample), "test_y_d_m #"+i.to_s)
-      ++i
+      i += 1
     end
   end
 
@@ -85,7 +85,7 @@ class DateDectectorTests < Test::Unit::TestCase
     i = 0
     dateExamples.each do |dateExample, answer|
       assert_equal(answer , @dd.get_ruby_date(dateExample), "test_y_m_d #"+i.to_s)
-      ++i
+      i += 1
     end
   end
 
