@@ -63,4 +63,4 @@ end
 #3/3/12
 #20121111
 dd = DateDetector.new()
-date = dd.get_ruby_date("01/13/2012")
+date = dd.get_ruby_date("01/13/12")
