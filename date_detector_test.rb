@@ -13,10 +13,11 @@ class DateDectectorTests < Test::Unit::TestCase
   #16-Sep-12
   #25.08.2011
   #13/08/2009
+  #3/3/12
 
+  #TODO solve these
   #Feb 12 2010  6:02AM
   #2011-05-14 22:16:00 -0400
-  #3/3/12
   #20121111
 
   def test_broken_str
