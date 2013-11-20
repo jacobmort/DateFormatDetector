@@ -4,21 +4,21 @@ require 'date'
 class DateDetector
   @@dDELIMITERS = [ /\s+/, /\//, /\-/, /\./ ]
   @@REGEX_DATE_MAP = {
-    /^[1-12]{1,2}(\/)[1-30]{1,2}(\/)\d{2}\s*/ => "%m/%d/%y",
-    /^[1-12]{1,2}(\/)[1-30]{1,2}(\/)\d{4}\s*/ => "%m/%d/%Y",
-    /^[1-30]{1,2}(\/)[1-12]{1,2}(\/)\d{2}\s*/ => "%d/%m/%y",
-    /^[1-30]{1,2}(\/)[1-12]{1,2}(\/)\d{4}\s*/ => "%d/%m/%Y",
+    /^([0]?[1-9]|1[0-2])(\/)([0-9]|[012]\d|3[0-1])(\/)\d{2}(\s|\z)/ => "%m/%d/%y",
+    /^([0]?[1-9]|1[0-2])(\/)([0-9]|[012]\d|3[0-1])(\/)\d{4}(\s|\z)/ => "%m/%d/%Y",
+    /^([0-9]|[012]\d|3[0-1])(\/)([0]?[1-9]|1[0-2])(\/)\d{2}(\s|\z)/ => "%d/%m/%y",
+    /^([0-9]|[012]\d|3[0-1])(\/)([0]?[1-9]|1[0-2])(\/)\d{4}(\s|\z)/ => "%d/%m/%Y",
 
-    /^\d{2}(\/)[1-30]{1,2}(\/)[1-12]{1,2}\s*/ => "%y/%d/%m",
-    /^\d{4}(\/)[1-30]{1,2}(\/)[1-12]{1,2}\s*/ => "%Y/%d/%m",
-    /^\d{2}(\/)[1-12]{1,2}(\/)[1-30]{1,2}\s*/ => "%y/%m/%d",
-    /^\d{4}(\/)[1-12]{1,2}(\/)[1-30]{1,2}\s*/ => "%Y/%m/%d",
+    /^\d{2}(\/)([0-9]|[012]\d|3[0-1])(\/)([0]?[1-9]|1[0-2])(\s|\z)/ => "%y/%d/%m",
+    /^\d{4}(\/)([0-9]|[012]\d|3[0-1])(\/)([0]?[1-9]|1[0-2])(\s|\z)/ => "%Y/%d/%m",
+    /^\d{2}(\/)([0]?[1-9]|1[0-2])(\/)([0-9]|[012]\d|3[0-1])(\s|\z)/ => "%y/%m/%d",
+    /^\d{4}(\/)([0]?[1-9]|1[0-2])(\/)([0-9]|[012]\d|3[0-1])(\s|\z)/ => "%Y/%m/%d",
 
     #Month spelled out ex. Sep
-    /^[1-12]{2}(\/)[a-zA-Z]{3}(\/)\d{2}\s*/ => "%d/%b/%y",
-    /^[1-12]{2}(\/)[a-zA-Z]{3}(\/)\d{4}\s*/ => "%d/%b/%Y",
-    /^[a-zA-Z]{3}(\/)[1-12]{2}(\/)\d{2}\s*/ => "%b/%d/%y",
-    /^[a-zA-Z]{3}(\/)[1-12]{2}(\/)\d{4}\s*/ => "%b/%d/%Y",
+    /^([0]?[1-9]|1[0-2])(\/)[a-zA-Z]{3}(\/)\d{2}(\s|\z)/ => "%d/%b/%y",
+    /^([0]?[1-9]|1[0-2])(\/)[a-zA-Z]{3}(\/)\d{4}(\s|\z)/ => "%d/%b/%Y",
+    /^[a-zA-Z]{3}(\/)([0]?[1-9]|1[0-2])(\/)\d{2}(\s|\z)/ => "%b/%d/%y",
+    /^[a-zA-Z]{3}(\/)([0]?[1-9]|1[0-2])(\/)\d{4}(\s|\z)/ => "%b/%d/%Y",
 
   }
 
@@ -32,7 +32,7 @@ class DateDetector
       @possible_formats.add(format);
     end
     @@REGEX_DATE_MAP.each do |regex,format|
-      if !does_match(regex, str)
+      unless does_match(regex, str)
         @possible_formats.delete(format)
       end
     end
@@ -41,12 +41,12 @@ class DateDetector
 
   def get_ruby_date(str)
     format = get_date_format(str)
-    if (format.size == 0)
-      puts "could not determine format of:"+str
+    if format.length == 0
+      #puts "could not determine format of:"+str
       -1
-    elif (format.size > 1)
-      puts "multiple formats matched:"<<str
-      puts "formats:"<<formats.to_s
+    elsif format.length > 1
+      #puts "multiple formats matched:"<<str
+      #puts "formats:"<<formats.to_s
       -1
     else
       Date.strptime(str, format[0])
@@ -63,4 +63,4 @@ end
 #3/3/12
 #20121111
 dd = DateDetector.new()
-date = dd.get_ruby_date("1/3/12")
+date = dd.get_ruby_date("01/13/2012")
