@@ -34,6 +34,9 @@ class DateDectectorTests < Test::Unit::TestCase
       "1/13/12" => Date.new(2012,1,13),
       "01/13/2012" => Date.new(2012,1,13),
       "12/21/2013" => Date.new(2013,12,21),
+      "Jan/13/12" => Date.new(2012,1,13),
+      "Feb/14/12" => Date.new(2012,2,14),
+      "Mar/14/12" => Date.new(2012,3,14),
     }
     i = 0
     dateExamples.each do |dateExample, answer|
@@ -46,6 +49,8 @@ class DateDectectorTests < Test::Unit::TestCase
     dateExamples = {
         "13/01/2012" => Date.new(2012,1,13),
         "21/12/2013" => Date.new(2013,12,21),
+        "13/Apr/2012" => Date.new(2012,4,13),
+        "21/May/2013" => Date.new(2013,5,21),
     }
     i = 0
     dateExamples.each do |dateExample, answer|
@@ -59,6 +64,9 @@ class DateDectectorTests < Test::Unit::TestCase
         "12/13/1" => Date.new(2012,1,13),
         "2012/13/01" => Date.new(2012,1,13),
         "2013/21/12" => Date.new(2013,12,21),
+        "12/13/Jun" => Date.new(2012,6,13),
+        "2012/13/Jul" => Date.new(2012,7,13),
+        "2013/21/Aug" => Date.new(2013,8,21),
     }
     i = 0
     dateExamples.each do |dateExample, answer|
@@ -71,6 +79,8 @@ class DateDectectorTests < Test::Unit::TestCase
     dateExamples = {
         "2012/01/13" => Date.new(2012,1,13),
         "2013/12/21" => Date.new(2013,12,21),
+        "2012/Sep/13" => Date.new(2012,9,13),
+        "2013/Oct/21" => Date.new(2013,10,21),
     }
     i = 0
     dateExamples.each do |dateExample, answer|
